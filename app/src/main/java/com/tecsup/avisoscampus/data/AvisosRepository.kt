@@ -12,6 +12,7 @@ import java.util.Locale
 interface AvisosRepository {
     val avisos: StateFlow<List<Aviso>>
     fun registrar(titulo: String, texto: String, origen: Origen): Aviso
+    fun limpiar()
 }
 
 class AvisosRepositoryMemoria : AvisosRepository {
@@ -24,5 +25,9 @@ class AvisosRepositoryMemoria : AvisosRepository {
         val aviso = Aviso(siguiente++, titulo, texto, origen, hora)
         _avisos.value = listOf(aviso) + _avisos.value
         return aviso
+    }
+
+    override fun limpiar() {
+        _avisos.value = emptyList()
     }
 }

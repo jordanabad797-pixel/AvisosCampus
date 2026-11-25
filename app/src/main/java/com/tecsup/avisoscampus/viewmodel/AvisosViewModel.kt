@@ -106,6 +106,10 @@ class AvisosViewModel(private val repo: AvisosRepository) : ViewModel() {
         }
     }
 
+    fun limpiarHistorial() {
+        repo.limpiar()
+    }
+
     fun noSePudoMostrar() {
         _mensaje.value = "Sin permiso: el aviso se guardó en el historial, pero no se mostró"
     }

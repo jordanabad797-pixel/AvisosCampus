@@ -268,7 +268,7 @@ fun PantallaAvisos(vm: AvisosViewModel) {
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-            HistorialAvisos(avisos)
+            HistorialAvisos(avisos, alBorrar = { vm.limpiarHistorial() })
         }
     }
 }

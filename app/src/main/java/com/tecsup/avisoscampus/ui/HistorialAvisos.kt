@@ -1,5 +1,6 @@
 package com.tecsup.avisoscampus.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +27,7 @@ import com.tecsup.avisoscampus.ui.theme.TextoSecundario
 import com.tecsup.avisoscampus.ui.theme.VerdeTexto
 
 @Composable
-fun HistorialAvisos(avisos: List<Aviso>) {
+fun HistorialAvisos(avisos: List<Aviso>, alBorrar: () -> Unit) {
     Tarjeta("Historial") {
         if (avisos.isEmpty()) {
             Text(
@@ -36,6 +38,12 @@ fun HistorialAvisos(avisos: List<Aviso>) {
         } else {
             avisos.take(20).forEach { aviso ->
                 FilaAviso(aviso)
+            }
+            OutlinedButton(
+                onClick = alBorrar,
+                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+            ) {
+                Text("Borrar historial")
             }
         }
     }

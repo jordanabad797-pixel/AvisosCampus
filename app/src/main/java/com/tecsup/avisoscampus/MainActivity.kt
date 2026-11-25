@@ -7,7 +7,6 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.tecsup.avisoscampus.data.AvisosRepositoryMemoria
 import com.tecsup.avisoscampus.ui.PantallaAvisos
 import com.tecsup.avisoscampus.ui.theme.AvisosCampusTheme
 import com.tecsup.avisoscampus.viewmodel.AvisosViewModel
@@ -20,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AvisosCampusTheme {
                 val vm: AvisosViewModel = viewModel(
-                    factory = AvisosViewModelFactory(AvisosRepositoryMemoria())
+                    factory = AvisosViewModelFactory((application as AvisosApp).repositorio)
                 )
                 PantallaAvisos(vm)
             }
