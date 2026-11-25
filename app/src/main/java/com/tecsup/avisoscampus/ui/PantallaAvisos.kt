@@ -108,6 +108,9 @@ fun PantallaAvisos(vm: AvisosViewModel) {
                 }
             }
             Tarjeta("Avisos") {
+                Button(onClick = { vm.avisarAhora() }) {
+                    Text("Mostrar aviso")
+                }
             }
             Tarjeta("Recordatorio") {
             }
