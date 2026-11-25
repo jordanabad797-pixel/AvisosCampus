@@ -62,6 +62,7 @@ fun PantallaAvisos(vm: AvisosViewModel) {
     val faltan by vm.faltan.collectAsState()
     val corriendo = faltan != null
     val escuchando by vm.escuchandoAvion.collectAsState()
+    val avisos by vm.avisos.collectAsState()
 
     val lanzador = rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -186,6 +187,7 @@ fun PantallaAvisos(vm: AvisosViewModel) {
                     modifier = Modifier.fillMaxWidth()
                 )
             }
+            HistorialAvisos(avisos)
         }
     }
 }
