@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tecsup.avisoscampus.data.AvisosRepository
 import com.tecsup.avisoscampus.model.Aviso
+import com.tecsup.avisoscampus.model.EventoAviso
 import com.tecsup.avisoscampus.model.Origen
 import com.tecsup.avisoscampus.model.PermisoUi
 import kotlinx.coroutines.Job
@@ -20,8 +21,8 @@ class AvisosViewModel(private val repo: AvisosRepository) : ViewModel() {
 
     val avisos: StateFlow<List<Aviso>> = repo.avisos
 
-    private val _eventos = MutableSharedFlow<Aviso>()
-    val eventos: SharedFlow<Aviso> = _eventos.asSharedFlow()
+    private val _eventos = MutableSharedFlow<EventoAviso>()
+    val eventos: SharedFlow<EventoAviso> = _eventos.asSharedFlow()
 
     private val _permiso = MutableStateFlow<PermisoUi>(PermisoUi.SinPedir)
     val permiso: StateFlow<PermisoUi> = _permiso.asStateFlow()
@@ -44,7 +45,7 @@ class AvisosViewModel(private val repo: AvisosRepository) : ViewModel() {
     fun avisarAhora() {
         viewModelScope.launch {
             val aviso = repo.registrar("Tarea lista", "Tu entrega fue registrada", Origen.BOTON)
-            _eventos.emit(aviso)
+            _eventos.emit(EventoAviso(aviso))
         }
     }
 
@@ -61,7 +62,7 @@ class AvisosViewModel(private val repo: AvisosRepository) : ViewModel() {
                     "Revisa tu laboratorio pendiente",
                     Origen.RECORDATORIO
                 )
-                _eventos.emit(aviso)
+                _eventos.emit(EventoAviso(aviso, urgente = true))
             } finally {
                 _faltan.value = null
             }
@@ -83,7 +84,7 @@ class AvisosViewModel(private val repo: AvisosRepository) : ViewModel() {
                 if (activo) "Activado" else "Desactivado",
                 Origen.MODO_AVION
             )
-            _eventos.emit(aviso)
+            _eventos.emit(EventoAviso(aviso))
         }
     }
 

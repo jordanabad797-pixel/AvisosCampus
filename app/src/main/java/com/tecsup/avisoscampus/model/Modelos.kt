@@ -14,6 +14,11 @@ data class Aviso(
     val hora: String
 )
 
+data class EventoAviso(
+    val aviso: Aviso,
+    val urgente: Boolean = false
+)
+
 sealed interface PermisoUi {
     data object SinPedir : PermisoUi
     data object Concedido : PermisoUi

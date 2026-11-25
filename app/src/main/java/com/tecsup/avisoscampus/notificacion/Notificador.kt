@@ -18,14 +18,18 @@ import com.tecsup.avisoscampus.model.Aviso
 
 object Notificador {
     const val CANAL = "avisos"
+    const val CANAL_URGENTE = "urgentes"
 
     fun crearCanal(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val canal = NotificationChannel(CANAL, "Avisos", NotificationManager.IMPORTANCE_DEFAULT).apply {
                 description = "Notificaciones de la app"
             }
+            val urgente = NotificationChannel(CANAL_URGENTE, "Urgentes", NotificationManager.IMPORTANCE_HIGH).apply {
+                description = "Recordatorios que aparecen en pantalla"
+            }
             val manager = context.getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(canal)
+            manager.createNotificationChannels(listOf(canal, urgente))
         }
     }
 
@@ -38,18 +42,20 @@ object Notificador {
     }
 
     @SuppressLint("MissingPermission")
-    fun mostrar(context: Context, aviso: Aviso): Boolean {
+    fun mostrar(context: Context, aviso: Aviso, urgente: Boolean = false): Boolean {
         if (!tienePermiso(context)) return false
         val intent = Intent(context, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
         val pendiente = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-        val notificacion = NotificationCompat.Builder(context, CANAL)
+        val canal = if (urgente) CANAL_URGENTE else CANAL
+        val prioridad = if (urgente) NotificationCompat.PRIORITY_HIGH else NotificationCompat.PRIORITY_DEFAULT
+        val notificacion = NotificationCompat.Builder(context, canal)
             .setSmallIcon(R.drawable.ic_notificacion)
             .setColor(0xFF1A6FA8.toInt())
             .setContentTitle(aviso.titulo)
             .setContentText(aviso.texto)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(prioridad)
             .setContentIntent(pendiente)
             .setAutoCancel(true)
             .build()
