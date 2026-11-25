@@ -22,6 +22,7 @@ import com.tecsup.avisoscampus.ui.theme.AzulOrigen
 import com.tecsup.avisoscampus.ui.theme.FondoFila
 import com.tecsup.avisoscampus.ui.theme.MoradoOrigen
 import com.tecsup.avisoscampus.ui.theme.TextoSecundario
+import com.tecsup.avisoscampus.ui.theme.VerdeTexto
 
 @Composable
 fun HistorialAvisos(avisos: List<Aviso>) {
@@ -77,6 +78,7 @@ private fun EtiquetaOrigen(origen: Origen) {
         Origen.BOTON -> AzulOrigen to Color.White
         Origen.RECORDATORIO -> AmbarOrigen to Color.Black
         Origen.MODO_AVION -> MoradoOrigen to Color.White
+        Origen.CARGADOR -> VerdeTexto to Color.White
     }
     Text(
         text = origen.texto,
