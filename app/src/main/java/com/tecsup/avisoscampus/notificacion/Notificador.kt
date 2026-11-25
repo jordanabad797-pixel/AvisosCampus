@@ -55,6 +55,7 @@ object Notificador {
             .setColor(0xFF1A6FA8.toInt())
             .setContentTitle(aviso.titulo)
             .setContentText(aviso.texto)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(aviso.texto))
             .setPriority(prioridad)
             .setContentIntent(pendiente)
             .setAutoCancel(true)
